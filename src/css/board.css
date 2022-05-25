@@ -1,0 +1,4 @@
+.board .board-face:hover{
+    cursor: pointer;
+    background-color: gray;
+}
