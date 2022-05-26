@@ -103,11 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const board = document.querySelector('.board')   
     const form_plyr_settings = document.getElementById('playerSettingsForm')
     const btnCloseModal = document.getElementById('btnCloseModal')
-    
+    const mainModal = document.getElementById('mainModal')
 
     form_plyr_settings.addEventListener('submit', (e) => {
         e.preventDefault()
-        console.log('new game created!')        
+        console.log('new game created!')
+        mainModal.classList.add('hidden')
         const game = new Game(board, form_plyr_settings)
         btnCloseModal.click()
     })
