@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+    const DOGIMGPATH = './src/img/dog.png'
+    const STARIMGPATH = './src/img/gold-star.png'
     class SongFx{
         constructor(){
             this.click = new Audio('./src/songs/click.wav')
@@ -43,10 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     class Game{
-        constructor(board, form_plyr_settings){
+        constructor(board, form_plyr_settings, player_node_img, player_node_name){
             this.board = board
             this.grid = [[],[],[]]
             this.form_plyr_settings = form_plyr_settings
+            this.player_node_img = player_node_img
+            this.player_node_name = player_node_name
+
+            console.log(this)
             this.init()
         }
 
@@ -86,6 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.player_character = node.value
                 }
             })
+
+            this.show_player_settings()
+        }
+
+        show_player_settings(){
+            let imgSrc = this.player_character == 'dog' ? DOGIMGPATH : STARIMGPATH
+            this.player_node_img.setAttribute('src', imgSrc)
+            this.player_node_name.innerText = this.player_nickname 
         }
 
         fill_face(event){
@@ -100,15 +113,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+   
+    // html nodes 
     const board = document.querySelector('.board')   
-    const form_plyr_settings = document.getElementById('playerSettingsForm')
     const btnCloseModal = document.getElementById('btnCloseModal')
-    
+    const mainModal = document.getElementById('mainModal')
+    const form_plyr_settings = document.getElementById('playerSettingsForm')
+    const player_node_img = document.querySelector('.player-char')
+    const player_node_name = document.querySelector('.player-name')
 
     form_plyr_settings.addEventListener('submit', (e) => {
         e.preventDefault()
-        console.log('new game created!')        
-        const game = new Game(board, form_plyr_settings)
+        console.log('new game created!')
+        mainModal.classList.add('hidden')
         btnCloseModal.click()
+        
+        const game = new Game(board, form_plyr_settings, player_node_img, player_node_name)
     })
 })
