@@ -9,4 +9,4 @@ Project is created with:
 * Tailwind CSS
 * JS / Vanilla
 
-If you want to check the project progress, just click [here](https://carlosleoncode.github.io/triqui_game/)
+If you want to check the project progress, just click [here](https://carlosleoncode.github.io/projct-triqui-game/)
