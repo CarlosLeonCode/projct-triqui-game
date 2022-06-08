@@ -44,71 +44,74 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     class Game{
-        constructor(board, form_plyr_settings, player_node_img, player_node_name){
+        constructor(board, formPlyrSettings, playerNodeImg, playerNodeName){
             this.board = board
             this.grid = [[],[],[]]
-            this.form_plyr_settings = form_plyr_settings
-            this.player_node_img = player_node_img
-            this.player_node_name = player_node_name
+            this.formPlyrSettings = formPlyrSettings
+            this.playerNodeImg = playerNodeImg
+            this.playerNodeName = playerNodeName
 
             console.log(this)
             this.init()
         }
 
         init(){
-            this.get_faces()
-            this.add_faces_clck_listener()
-            this.set_player_settings()
-            this.set_game_turn()
+            this.getFaces()
+            this.addFacesClckListener()
+            this.setPlayerSettings()
+            this.setGameTurn()
             this.audioFxs = new SongFx()
             this.audioFxs.start.play()
         }
 
-        set_circle_on_face(){
+        setCircleOnFace(){
         }
 
-        set_x_on_face(){
+        setXonFace(){
             
         }
 
-        set_game_turn(){
+        setGameTurn(){
             let rand = Math.floor(Math.random() * 2);
             this.game_turn = rand == 1 ? 'player' : 'machine' 
         }
 
 
-        get_faces(){
+        getFaces(){
             this.faces = this.board.querySelectorAll('div')
         }
 
-        set_player_settings(){
-            this.player_nickname = this.form_plyr_settings.querySelector('input[name="nickname"]').value
-            this.player_character = null
-            const characters = this.form_plyr_settings.querySelectorAll('input[type="radio"]')
+        setPlayerSettings(){
+            this.playerNickname = this.formPlyrSettings.querySelector('input[name="nickname"]').value
+            this.playerCharacter = null
+            const characters = this.formPlyrSettings.querySelectorAll('input[type="radio"]')
             // find character checked
             characters.forEach(node => {
                 if(node.checked){
-                    this.player_character = node.value
+                    this.playerCharacter = node.value
                 }
             })
 
-            this.show_player_settings()
+            this.renderPlayerSettings()
         }
 
-        show_player_settings(){
-            let imgSrc = this.player_character == 'dog' ? DOGIMGPATH : STARIMGPATH
-            this.player_node_img.setAttribute('src', imgSrc)
-            this.player_node_name.innerText = this.player_nickname 
+        renderPlayerSettings(){
+            let imgSrc = this.playerCharacter == 'dog' ? DOGIMGPATH : STARIMGPATH
+            this.playerNodeImg.setAttribute('src', imgSrc)
+            this.playerNodeName.innerText = this.playerNickname 
         }
 
-        fill_face(event){
-            this.audioFxs.click.play()
-            new ImageNode('star', event.target)
+        fillBoardFace(event){
+            if(event.target.children.length == 0){
+                new ImageNode('star', event.target)
+                event.target.classList.add('locked')
+                this.audioFxs.click.play()
+            }
         }
 
-        add_faces_clck_listener(){
+        addFacesClckListener(){
             this.faces.forEach(node => {
-                node.addEventListener('click', e => this.fill_face(e)) 
+                node.addEventListener('click', e => this.fillBoardFace(e)) 
             });
         }
     }
@@ -118,16 +121,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const board = document.querySelector('.board')   
     const btnCloseModal = document.getElementById('btnCloseModal')
     const mainModal = document.getElementById('mainModal')
-    const form_plyr_settings = document.getElementById('playerSettingsForm')
-    const player_node_img = document.querySelector('.player-char')
-    const player_node_name = document.querySelector('.player-name')
+    const formPlyrSettings = document.getElementById('playerSettingsForm')
+    const playerNodeImg = document.querySelector('.player-char')
+    const playerNodeName = document.querySelector('.player-name')
 
-    form_plyr_settings.addEventListener('submit', (e) => {
+    formPlyrSettings.addEventListener('submit', (e) => {
         e.preventDefault()
         console.log('new game created!')
         mainModal.classList.add('hidden')
         btnCloseModal.click()
         
-        const game = new Game(board, form_plyr_settings, player_node_img, player_node_name)
+        const game = new Game(board, formPlyrSettings, playerNodeImg, playerNodeName)
     })
 })

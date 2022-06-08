@@ -1,8 +1,3 @@
-.board .board-face:hover{
-    cursor: pointer;
-    background-color: gray;
-}
-
 .app-modal form .radio-fields-lbl .checkmark{
     background-color: rgba(250, 250, 250, 0.2);
     border-radius: 50%;
@@ -28,6 +23,28 @@
 
 .board-face{
     justify-content: center;
+    position: relative;
+}
+
+.board-face:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.board-face.locked::after{
+    content: " ";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.board-face.locked{
+    cursor: not-allowed;
+}
+
+.board-face:active{
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .board-face .imgInFace{
@@ -41,3 +58,4 @@
     transform: scale(.8);
     opacity: 1;
 }
+
